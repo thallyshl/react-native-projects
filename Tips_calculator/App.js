@@ -100,7 +100,7 @@ export default () => {
       { tip > 0 &&
         <View style = {styles.ViewTip}>
           <Text style = {styles.Result}>O valor da gorjeta é:</Text>
-          <Text style = {styles.Result}>R$ {tip}</Text>
+          <Text style = {styles.Result}>R$ {tip.toFixed(2)}</Text>
         </View>}
       <View style = {styles.Btn}>
         <Button
