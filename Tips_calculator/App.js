@@ -1,11 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, SafeAreaView, Button, TextInput, StyleSheet } from "react-native";
-
-
-
-
-
-
+import React, { useState, useEffect } from "react";
+import { View, Text, SafeAreaView, Button, TextInput, StyleSheet, Platform } from "react-native";
 
 
 // CSS em StyleSheet
@@ -63,6 +57,7 @@ export default () => {
   const [ bill, setBill ] = useState ('');
   const [ porc, setPorc ] = useState ('');
   const [ tip, setTip ] = useState (0);
+  const [ clear, setClear ] = useState (true);
   
   const valueOfTip = () => {
     let totalBill = parseFloat(bill);
@@ -73,13 +68,22 @@ export default () => {
     } else {
       alert ('Valores inválidos!')
     }
+
+    setClear (true)
     
   }
-  const clear = () => {
-    setBill ('');
-    setPorc ('');
-    setTip (0);
+  function clearBtn() {
+    setClear(false);
+    alert('Insira novos valores!');
   }
+
+  useEffect (
+    () => {
+      setBill('');
+      setPorc('');
+      setTip(0);
+    }, [clear]
+  );
   
 
   return (
@@ -87,6 +91,7 @@ export default () => {
       <Text style = {styles.Header}> Calculadora de gorjeta </Text>
       <TextInput
         placeholder="Qual o valor da conta?"
+        value={bill}
         keyboardType="numeric"
         style = {styles.InputTip}
         onChangeText={n=>setBill(n)}    
@@ -94,6 +99,7 @@ export default () => {
       <TextInput
         placeholder="Qual a porcentagem da gorjeta?"
         keyboardType="numeric"
+        value={porc}
         style = {styles.InputTip}
         onChangeText={p=>setPorc(p)}
       />
@@ -112,7 +118,7 @@ export default () => {
         <Button
           title = 'Limpar'
           style = {styles.Btn}
-          onPress={clear}
+          onPress={clearBtn}
         />
       </View>  
       
